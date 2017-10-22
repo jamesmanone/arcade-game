@@ -40,7 +40,7 @@ module.exports = {
         enforce: 'pre',
         use: ['babel-loader']
       },
-      {test: /\.png$/, loader: 'file-loader'}
+      {test: /\.png$/, loader: 'file-loader', options: {name: 'images/[name].[ext]'}}
     ]
   }
 };

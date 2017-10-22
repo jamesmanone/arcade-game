@@ -14,14 +14,15 @@ const Enemy = function(ctx) {
   this.speed = Math.floor((Math.random()*400)+50);
   this.x = -(this.speed * Math.random()) - BLOCK_WIDTH;
   this.y = this.getLane();
+  if(Resources.get(this.sprite) === undefined) Resources.load(this.sprite);
 }
 
 Enemy.prototype.update = function(dt) {
     this.x+=(dt*this.speed);
-    if(this.x>=C_WIDTH) {
-      this.x= -(this.speed*Math.random()*1.5) - BLOCK_WIDTH;  // Off screen up to 1.5s
+    if(this.x >= C_WIDTH) {
+      this.x = -(this.speed*Math.random()*1.5) - BLOCK_WIDTH;  // Off screen up to 1.5s
       this.speed = Math.floor((Math.random()*400)+50);  // Random speed 50 - 450 PxPS
-      this.lane = this.getLane();
+      this.y = this.getLane();
     }
 };
 
@@ -31,7 +32,7 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.getLane = function() {
   let lane = Math.floor(Math.random()*3)+1;
-  return lane * BLOCK_HEIGHT + 50;
+  return lane * BLOCK_HEIGHT + OFFSET;
 };
 
 export default Enemy;

@@ -10,22 +10,29 @@ import * as Resources from '../resources';
 
 const Player = function(ctx) {
   this.ctx = ctx;
-  this.x = BLOCK_WIDTH * 3 + 15;
-  this.y = BLOCK_HEIGHT * 4.65;
+  this.reset();
   this.sprite = 'images/char-boy.png';
+  Resources.load(this.sprite);
 };
 
-Player.prototype.update = function() {
+Player.prototype.update = function(allEnemies, win) {
+  if(this.y < BLOCK_HEIGHT) {
+    this.reset();
+    // win();
+    return;
+  }
   if (allEnemies && allEnemies.length) allEnemies.forEach(enemy => {
     // collision check
-    if(this.y >= enemy.y && this.y <= enemy.y + BLOCK_HEIGHT &&
-       this.x <= enemy.x + BLOCK_WIDTH && this.x >= enemy.x
-     ) {
-       this.x = BLOCK_WIDTH * 3 + 15;
-       this.y = BLOCK_HEIGHT * 4.65;
-     }
+    if(this.y >= enemy.y && this.y <= enemy.y + BLOCK_HEIGHT - 2 &&
+       this.x + 5 <= enemy.x + BLOCK_WIDTH && this.x >= enemy.x
+     ) this.reset();
   })
 };
+
+Player.prototype.reset = function() {
+  this.x = BLOCK_WIDTH * 3 + 15;
+  this.y = BLOCK_HEIGHT * 4 + OFFSET;
+}
 
 Player.prototype.render = function() {
   this.ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
