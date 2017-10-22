@@ -3,6 +3,8 @@ import './images/enemy-bug.png';
 import './images/grass-block.png';
 import './images/stone-block.png';
 import './images/water-block.png';
+import './images/rock.png';
+import './images/char-boy-icn.png';
 
 import Player from './classes/Player';
 import Enemy from './classes/Enemy';
@@ -23,4 +25,9 @@ let enemies = [];
 for(let i = 5; --i;) enemies.push(new Enemy(ctx));
 
 
-new Engine(player, enemies, ctx);
+const engine = new Engine(player, enemies, ctx);
+
+const surrender = document.createElement('button');
+surrender.innerText = 'Surrender';
+surrender.addEventListener('click', engine.surrender);
+document.body.appendChild(surrender);
