@@ -61,6 +61,23 @@ Player.prototype.checkRocks = function(x, y) {
   return false;
 };
 
+Player.prototype.checkKey = function(key) {
+  if(key.y <= this.y && key.y + BLOCK_HEIGHT >= this.y &&
+     key.x <= this.x && key.x + BLOCK_WIDTH >= this.x
+  ) return true;
+  return false;
+};
+
+Player.prototype.checkKeys = function() {
+  const keys = window.keys();
+  keys.forEach((key, i) => {
+    if(this.checkKey(key)) {
+      ++this.keys;
+      keys.splice(i, 1);
+    }
+  });
+};
+
 Player.prototype.moveUp = function() {
   if(this.y<=OFFSET) return;
   const newX = this.x;
@@ -93,14 +110,18 @@ Player.prototype.handleInput = function({keyCode}) {
   // Checks for off board condition and updates player pos
   switch (keyCode) {
     case 37:
-      return this.moveLeft();
+      this.moveLeft();
+      break;
     case 38:
-      return this.moveUp();
+      this.moveUp();
+      break;
     case 39:
-      return this.moveRight();
+      this.moveRight();
+      break;
     case 40:
-      return this.moveDown();
+      this.moveDown();
   }
+  this.checkKeys();
 };
 
 Player.prototype.getKeys = function() {
