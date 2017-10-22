@@ -2,14 +2,13 @@ import {
   BLOCK_WIDTH,
   BLOCK_HEIGHT,
   C_WIDTH,
-  C_HEIGHT,
   OFFSET
 } from '../const';
 
 import * as Resources from '../resources';
 
 export default class Engine {
-  constructor(player, enemies, ctx) {
+  constructor(player, enemies, ctx, scoreboard) {
     this.player = player;
     this.enemies = enemies;
     this.rocks = [];  // no rocks on lvl1
@@ -29,8 +28,12 @@ export default class Engine {
     this.level = 1;
     this.ctx.font = '16px monospace';
     window.rocks = this.getRocks;
+    scoreboard.getLevel = this.getLevel;
+    this.scoreboard = scoreboard;
     player.surrender = this.surrender;
   }
+
+  getLevel = () => this.level;
 
   surrender = () => {
     this.player.reset();
@@ -79,24 +82,8 @@ export default class Engine {
 
   getRocks = () => this.rocks;
 
-  renderLvl = () => {
-    this.ctx.fillStyle = 'white';
-    this.ctx.fillRect(0,0,C_WIDTH,20);
-    this.ctx.fillStyle = 'black';
-    this.ctx.fillText(`Level ${this.level}`, 25, 12);
-  }
-
-  renderLives = () => {
-    let x = C_WIDTH - 25;
-    for(let i = this.player.lives; i--;) {
-      this.ctx.drawImage(Resources.get('images/char-boy-icn.png'), x - 13, 0);
-      x -=  20;
-    }
-  }
-
   render = () => {
-    this.renderLvl();
-    this.renderLives();
+    this.scoreboard.render();
     for(let row = 0; row < 6; ++row)
       for(let col = 0; col < 5; ++col)
         this.ctx.drawImage(Resources.get(this.rowImages[row]), col * BLOCK_WIDTH, row * BLOCK_HEIGHT + 5);

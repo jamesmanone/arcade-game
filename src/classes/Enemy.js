@@ -2,7 +2,6 @@ import {
   BLOCK_WIDTH,
   BLOCK_HEIGHT,
   C_WIDTH,
-  C_HEIGHT,
   OFFSET
 } from '../const';
 
@@ -15,7 +14,7 @@ const Enemy = function(ctx) {
   this.x = -(this.speed * Math.random()) - BLOCK_WIDTH;
   this.y = this.getLane();
   if(Resources.get(this.sprite) === undefined) Resources.load(this.sprite);
-}
+};
 
 Enemy.prototype.update = function(dt) {
     this.x+=(dt*this.speed);

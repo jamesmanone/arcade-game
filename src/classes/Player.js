@@ -13,7 +13,10 @@ const Player = function(ctx) {
   this.reset();
   this.sprite = 'images/char-boy.png';
   this.lives = 3;
+  this.keys = 0;
   Resources.load(this.sprite);
+  this.getLives = this.getLives.bind(this);
+  this.getKeys = this.getKeys.bind(this);
 };
 
 Player.prototype.update = function(allEnemies, win) {
@@ -98,6 +101,14 @@ Player.prototype.handleInput = function({keyCode}) {
     case 40:
       return this.moveDown();
   }
+};
+
+Player.prototype.getKeys = function() {
+  return this.keys;
+};
+
+Player.prototype.getLives = function() {
+  return this.lives;
 };
 
 export default Player;

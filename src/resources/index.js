@@ -1,7 +1,6 @@
 // Starter code from Udacity updated to webpack/es6
 
 let resourceCache = {};
-let loading = [];
 let readyCallbacks = [];
 
 const isReady = () => {
