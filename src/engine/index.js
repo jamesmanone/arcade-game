@@ -46,6 +46,8 @@ export default class Engine {
     this.enemies.forEach(enemy => enemy.x = C_WIDTH);
     this.level = 1;
     this.rocks = [];
+    this.keys = [];
+    while(this.enemies.length > 4) this.enemies.pop();
   }
 
   init = () => {
@@ -97,8 +99,6 @@ export default class Engine {
   }
 
   getKeys = () => this.keys;
-
-  removeKey = i => this.keys.splice(i, 1);
 
   setRocks = () => {
     let rocks = [];

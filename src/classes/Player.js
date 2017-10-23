@@ -55,8 +55,14 @@ Player.prototype.checkRock = function(x, y, rock) {
 
 Player.prototype.checkRocks = function(x, y) {
   const rocks = window.rocks();
-  for(let rock of rocks) {
-    if(this.checkRock(x, y, rock)) return true;
+  for(let i = 0; i < rocks.length; ++i) {
+    if(this.checkRock(x, y, rocks[i])) {
+      if(!this.keys) return true;
+      else {
+        --this.keys;
+        rocks.splice(i, 1);
+      }
+    }
   }
   return false;
 };
