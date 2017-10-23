@@ -85,14 +85,14 @@ Player.prototype.checkKeys = function() {
 };
 
 Player.prototype.moveUp = function() {
-  if(this.y<=OFFSET) return;
+  // No offscreen check because top tile === win condition
   const newX = this.x;
   const newY = this.y - BLOCK_HEIGHT;
   if(!this.checkRocks(newX, newY)) this.y = newY;
 };
 
 Player.prototype.moveDown = function() {
-  if(this.y>=C_HEIGHT - BLOCK_HEIGHT - OFFSET) return;
+  if(this.y>=C_HEIGHT - BLOCK_HEIGHT - 40) return;
   const newX = this.x;
   const newY = this.y + BLOCK_HEIGHT;
   if(!this.checkRocks(newX, newY)) this.y = newY;
