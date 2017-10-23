@@ -24,8 +24,7 @@ export default class Engine {
       'images/grass-block.png',   // Row 1 of 2 of grass
       'images/grass-block.png'    // Row 2 of 2 of grass
     ];
-    Resources.load([rockImg, keyImg]);
-    Resources.load(this.rowImages);
+    Resources.load([rockImg, keyImg, ...this.rowImages]);
     Resources.onReady(this.init);
     this.level = 1;
     this.keys = [];
@@ -34,12 +33,12 @@ export default class Engine {
     window.keys = this.getKeys;
     scoreboard.getLevel = this.getLevel;
     this.scoreboard = scoreboard;
-    player.surrender = this.surrender;
+    player.lose = this.lose;
   }
 
   getLevel = () => this.level;
 
-  surrender = () => {
+  lose = () => {
     this.player.reset();
     this.player.lives = 3;
     this.player.keys = 0;
@@ -82,6 +81,7 @@ export default class Engine {
   }
 
   setKeys = () => {
+    // add 1, 2, or 3 keys to the board
     let keyCount = this.level / 3;
     if(keyCount > 3) keyCount = 3;
     if(this.level > 30) keyCount = 1;

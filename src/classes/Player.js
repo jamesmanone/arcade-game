@@ -10,17 +10,18 @@ import * as Resources from '../resources';
 
 const Player = function(ctx) {
   this.ctx = ctx;
-  this.reset();
+  this.reset();  // Sets initial position
   this.sprite = 'images/char-boy.png';
   this.lives = 3;
   this.keys = 0;
   Resources.load(this.sprite);
+  // Binding needed to pass member fn without passing the whole object.
   this.getLives = this.getLives.bind(this);
   this.getKeys = this.getKeys.bind(this);
 };
 
 Player.prototype.update = function(allEnemies, win) {
-  if(this.y < BLOCK_HEIGHT) {
+  if(this.y < BLOCK_HEIGHT) {  // Win condition
     this.reset();
     win();
     return;
@@ -31,14 +32,14 @@ Player.prototype.update = function(allEnemies, win) {
        this.x + 5 <= enemy.x + BLOCK_WIDTH && this.x >= enemy.x
      ) {
        this.reset();
-       if(!--this.lives && this.surrender) this.surrender();
-       // surrender is injected by engine on instantiation
+       if(!--this.lives && this.lose) this.lose();
+       // lose is injected by engine on instantiation
      }
   });
 };
 
 Player.prototype.reset = function() {
-  this.x = BLOCK_WIDTH * 3 + 15;
+  this.x = BLOCK_WIDTH * 3 + 15;  // magic number to center player in block
   this.y = BLOCK_HEIGHT * 4 + OFFSET;
 };
 
@@ -58,7 +59,7 @@ Player.prototype.checkRocks = function(x, y) {
   for(let i = 0; i < rocks.length; ++i) {
     if(this.checkRock(x, y, rocks[i])) {
       if(!this.keys) return true;
-      else {
+      else {  // Use a key to remove the rock
         --this.keys;
         rocks.splice(i, 1);
       }
@@ -127,9 +128,10 @@ Player.prototype.handleInput = function({keyCode}) {
     case 40:
       this.moveDown();
   }
-  this.checkKeys();
+  this.checkKeys();  // collect keys
 };
 
+// Helper functions to get key and life counts to other objects
 Player.prototype.getKeys = function() {
   return this.keys;
 };

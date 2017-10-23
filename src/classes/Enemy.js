@@ -11,7 +11,7 @@ const Enemy = function(ctx) {
   this.ctx = ctx;
   this.sprite = 'images/enemy-bug.png';
   this.setSpeed();
-  this.x = -(this.speed * Math.random()) - BLOCK_WIDTH;
+  this.x = 0;
   this.getLane();
   if(Resources.get(this.sprite) === undefined) Resources.load(this.sprite);
 };
@@ -34,7 +34,6 @@ Enemy.prototype.render = function() {
 };
 
 Enemy.prototype.getLane = function() {
-  // debugger;
   let lane = Math.floor(Math.random()*3)+1;
   this.y = lane * BLOCK_HEIGHT + OFFSET;
 };
