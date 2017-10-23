@@ -8,6 +8,8 @@ import './images/char-boy-icn.png';
 import './images/key.png';
 import './images/key-icn.png';
 
+import './css/style.css';
+
 import Player from './classes/Player';
 import Enemy from './classes/Enemy';
 import Engine from './engine';
